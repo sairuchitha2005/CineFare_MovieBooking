@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+</head>
+
+<body>
+    <h1>
+        {% if c %}
+        <div style="text-align: center;">
+            <h1 style="color: green;">Payment Successful!!</h1>
+            <br>
+            <a href="/{{city}}/" style="text-decoration: none;">Return to Home Page!!</a>
+        </div>
+        {% else %}
+        <form action="/{{city}}/payment/" method="post">
+            {% csrf_token %}
+            <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_v9sDWwBdexUf2L"
+                data-amount="{{payment.amount}}" data-currency="INR" data-order_id="{{payment.id}}"
+                data-buttontext="Pay with Razorpay" data-name="Cinefare" data-description="Book Watch Enjoy!!"
+                data-image="{% static 'icon.ico' %}" data-prefill.name="{{request.user.first_name}}"
+                data-prefill.email="{{request.user.email}}" data-theme.color="#F37254"></script>
+            <input type="hidden" custom="Hidden Element" name="hidden" />
+        </form>
+        {% endif %}
+    </h1>
+</body>
+
+</html>
